@@ -1,7 +1,7 @@
 import { ApiProperty } from "@nestjs/swagger";
 
 //차량 구분
-export enum CarType{
+export enum CarType {
     all = 'all',
     resident = 'resident',
     visit = 'visit',
@@ -9,7 +9,7 @@ export enum CarType{
 }
 
 export class CarRecord {
-    constructor(params : CarRecord){
+    constructor(params: CarRecord) {
         this.id = params.id;
         this.name = params.name;
         this.number = params.number;
@@ -17,37 +17,42 @@ export class CarRecord {
         this.entryTime = params.entryTime;
     }
 
-    id:string;
+    @ApiProperty({
+        name: 'id',
+        description: '식별자',
+        example: '1',
+    })
+    id: string;
 
     @ApiProperty({
-        name:'name',
-        description : '차주명',
-        example:'홍길동',
+        name: 'name',
+        description: '차주명',
+        example: '홍길동',
     })
-    name:string;
+    name: string;
 
     @ApiProperty({
-        name:'number',
-        description : '차량번호',
-        example:'07가 4538',
+        name: 'number',
+        description: '차량번호',
+        example: '07가 4538',
     })
-    number:string;
+    number: string;
 
     @ApiProperty({
-        name:'carType',
-        description:'차량구분',
-        example:'resident',
+        name: 'carType',
+        description: '차량구분',
+        example: 'resident',
     })
-    carType :CarType;
+    carType: CarType;
 
     @ApiProperty({
-        name:'entryTime',
-        description : '입차시간',
-        example:'2025-02-21 18:04:51',
+        name: 'entryTime',
+        description: '입차시간',
+        example: '2025-02-21 18:04:51',
     })
-    entryTime:Date;
+    entryTime: Date;
 
-    
+
 
 
 
