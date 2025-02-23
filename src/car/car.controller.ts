@@ -20,9 +20,10 @@ export class CarController {
     })
     @Get('/dashboard')
     async getCarCounts(): Promise<CarCount[] | null> {
+        console.log('[Controller][Car] 주차차량 카운트 조회');
         await sleep(300);
         const data: CarCount[] = Object.values(CarType).map((type) => ({
-            type,
+            carType : type,
             value: type == 'all' ? parkingCarData.length : parkingCarData.filter((e) => e.carType == type).length
         }));
 
@@ -43,14 +44,13 @@ export class CarController {
     async getParkingCarByType(
         @Param('type') carType: CarType
     ): Promise<ListBase<CarRecord>> {
-
+        console.log(`[Controller][Car] 전체 주차차량 조회(파라미터 : ${carType})`);
 
         //딜레이
         await sleep(300);
 
         //all인 경우 전체를 반환
         if (carType == 'all') {
-            ;
             return { data: parkingCarData } as ListBase<CarRecord>;
         }
 

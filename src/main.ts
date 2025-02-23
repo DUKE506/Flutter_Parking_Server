@@ -1,6 +1,7 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import { CarRecord } from './car/entities/car.entity';
 
 declare const module: any;
 
@@ -13,7 +14,7 @@ async function bootstrap() {
   .setVersion('1.0')
   .build();
 
-  const document = SwaggerModule.createDocument(app, options);
+  const document = SwaggerModule.createDocument(app, options,{extraModels:[CarRecord],});
   SwaggerModule.setup('api',app, document);
 
   await app.listen(process.env.PORT ?? 3000);

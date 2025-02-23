@@ -9,7 +9,7 @@ export class CarCount{
         description:'차량구분',
         example:'resident',
     })
-    type : CarType;
+    carType : CarType;
 
     //값
     @ApiProperty({
