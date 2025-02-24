@@ -1,11 +1,12 @@
 import { Controller, Get, Param } from '@nestjs/common';
 import { ApiOkResponse, ApiOperation, ApiParam, ApiTags } from '@nestjs/swagger';
 import { CarRecord, CarType } from './entities/car.entity';
-import { parkingCarData } from './data';
+import { detailCarData, parkingCarData } from './data';
 import { sleep } from './utils/utils';
 import { CarCount } from './dto/car-count.dto';
 import { ListBase } from 'src/common/entities/list-base.entity';
 import { ApiListOkResponseDecorator } from 'src/common/decorator/api-list-ok-response.decorator';
+import { CarDetail } from './entities/car_detail.entity';
 
 @ApiTags('car')
 @Controller('car')
@@ -31,7 +32,9 @@ export class CarController {
         return data;
     }
 
-    @Get(':type')
+    
+
+    @Get('/:type')
     @ApiParam({
         name: 'type',
         description: '차량구분',
@@ -58,5 +61,28 @@ export class CarController {
         const data = parkingCarData.filter((e) => e.carType == carType);
 
         return { data } as ListBase<CarRecord>;
+    }
+
+
+    @Get('/detail/:id')
+    @ApiParam({
+        name:'id',
+        description : '차량 식별자',
+        example : '1',
+    })
+    @ApiOperation({summary:'주차차량 상세 조회'})
+    @ApiOkResponse({
+        description : '조회 성공',
+        type :CarDetail,
+    })
+    async getDetailCarById(
+        @Param('id') id : string,
+    ):Promise<CarDetail | undefined>{
+        console.log(`[Controller][Car] 주차차량 상세조회(파라미터 : ${id})`);
+        await sleep(300);
+
+        const filterData = detailCarData.find( car => car.id == id);
+
+        return filterData;
     }
 }
