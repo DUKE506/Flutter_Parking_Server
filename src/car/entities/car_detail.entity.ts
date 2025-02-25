@@ -9,6 +9,7 @@ export class CarDetail{
         this.id = params.id;
         this.name = params.name;
         this.number = params.number;
+        this.modelName= params.modelName
         this.address = params.address;
         this.phone = params.phone;
         this.carType = params.carType;
@@ -32,6 +33,15 @@ export class CarDetail{
         nullable: true
     })
     name:string | null;
+
+    //모델명
+    @ApiProperty({
+        name : 'name',
+        description : '모델명',
+        example : '스포티지',
+        nullable: true
+    })
+    modelName:string | null;
 
     //차량번호
     @ApiProperty({
