@@ -1,5 +1,6 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { CarType } from "../entities/car.entity"
+import { CarType } from "../types/types";
+
 
 
 export class CarCount{

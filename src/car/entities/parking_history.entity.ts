@@ -1,10 +1,5 @@
 import { ApiProperty } from "@nestjs/swagger";
-
-
-export enum ParkingState{
-    IN = 'IN',
-    OUT = 'OUT',
-}
+import { ParkingState } from "../types/types";
 
 
 //주차 히스토리

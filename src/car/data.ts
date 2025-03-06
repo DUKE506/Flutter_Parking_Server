@@ -1,6 +1,8 @@
-import { CarRecord, CarType } from "./entities/car.entity";
+import { CarRecord } from "./dto/car-record.dto";
+
 import { CarDetail } from "./entities/car_detail.entity";
-import { ParkingState } from "./entities/parking_history.entity";
+import { CarType, ParkingState } from "./types/types";
+
 
 //타입별 주차 조회
 export const parkingCarData: CarRecord[] = [
@@ -8,140 +10,140 @@ export const parkingCarData: CarRecord[] = [
     id: "1",
     name: "홍길동",
     number: "05가 1594",
-    carType: CarType.resident,
+    carType: CarType.RESIDENT,
     entryTime: new Date("2024-02-21 08:30:00"),
   },
   {
     id: "2",
     name: "김철수",
     number: "34나 9284",
-    carType: CarType.visit,
+    carType: CarType.VISIT,
     entryTime: new Date("2024-02-21 09:15:00"),
   },
   {
     id: "3",
     name: "이영희",
     number: "22다 4567",
-    carType: CarType.resident,
+    carType: CarType.RESIDENT,
     entryTime: new Date("2024-02-21 10:00:00"),
   },
   {
     id: "4",
     name: "",
     number: "15라 7823",
-    carType: CarType.outside,
+    carType: CarType.OUTSIDE,
     entryTime: new Date("2024-02-21 10:30:00"),
   },
   {
     id: "5",
     name: "정승훈",
     number: "88마 1111",
-    carType: CarType.resident,
+    carType: CarType.RESIDENT,
     entryTime: new Date("2024-02-21 11:45:00"),
   },
   {
     id: "6",
     name: "강지아",
     number: "67바 3456",
-    carType: CarType.visit,
+    carType: CarType.VISIT,
     entryTime: new Date("2024-02-21 12:20:00"),
   },
   {
     id: "7",
     name: "조현우",
     number: "91사 7777",
-    carType: CarType.resident,
+    carType: CarType.RESIDENT,
     entryTime: new Date("2024-02-21 13:10:00"),
   },
   {
     id: "8",
     name: "",
     number: "45아 2468",
-    carType: CarType.outside,
+    carType: CarType.OUTSIDE,
     entryTime: new Date("2024-02-21 14:00:00"),
   },
   {
     id: "9",
     name: "임재현",
     number: "33자 9876",
-    carType: CarType.resident,
+    carType: CarType.RESIDENT,
     entryTime: new Date("2024-02-21 14:30:00"),
   },
   {
     id: "10",
     name: "한미나",
     number: "77차 5432",
-    carType: CarType.visit,
+    carType: CarType.VISIT,
     entryTime: new Date("2024-02-21 15:15:00"),
   },
   {
     id: "11",
     name: "신동훈",
     number: "12카 8888",
-    carType: CarType.resident,
+    carType: CarType.RESIDENT,
     entryTime: new Date("2024-02-21 16:00:00"),
   },
   {
     id: "12",
     name: "",
     number: "59타 1357",
-    carType: CarType.outside,
+    carType: CarType.OUTSIDE,
     entryTime: new Date("2024-02-21 16:45:00"),
   },
   {
     id: "13",
     name: "권현석",
     number: "83파 2222",
-    carType: CarType.resident,
+    carType: CarType.RESIDENT,
     entryTime: new Date("2024-02-21 17:20:00"),
   },
   {
     id: "14",
     name: "최유진",
     number: "25하 6543",
-    carType: CarType.visit,
+    carType: CarType.VISIT,
     entryTime: new Date("2024-02-21 18:00:00"),
   },
   {
     id: "15",
     name: "백승호",
     number: "47거 9999",
-    carType: CarType.resident,
+    carType: CarType.RESIDENT,
     entryTime: new Date("2024-02-21 18:30:00"),
   },
   {
     id: "16",
     name: "",
     number: "16너 4321",
-    carType: CarType.outside,
+    carType: CarType.OUTSIDE,
     entryTime: new Date("2024-02-21 19:15:00"),
   },
   {
     id: "17",
     name: "송민재",
     number: "92더 6666",
-    carType: CarType.resident,
+    carType: CarType.RESIDENT,
     entryTime: new Date("2024-02-21 20:00:00"),
   },
   {
     id: "18",
     name: "장서영",
     number: "38러 7890",
-    carType: CarType.visit,
+    carType: CarType.VISIT,
     entryTime: new Date("2024-02-21 20:45:00"),
   },
   {
     id: "19",
     name: "남기준",
     number: "71머 3333",
-    carType: CarType.resident,
+    carType: CarType.RESIDENT,
     entryTime: new Date("2024-02-21 21:30:00"),
   },
   {
     id: "20",
     name: "",
     number: "19버 5555",
-    carType: CarType.outside,
+    carType: CarType.OUTSIDE,
     entryTime: new Date("2024-02-21 22:00:00"),
   },
 ];
@@ -155,7 +157,7 @@ export const detailCarData: CarDetail[] = [
     number: "05가 1594",
     address: "서울시 강남구 테헤란로 1",
     phone: "010-1111-0001",
-    carType: CarType.resident,
+    carType: CarType.RESIDENT,
     state: ParkingState.IN,
     history: [
       {
@@ -189,7 +191,7 @@ export const detailCarData: CarDetail[] = [
     number: "34나 9284",
     address: "",            // 방문차량은 address는 빈 값
     phone: "010-2222-0002",
-    carType: CarType.visit,
+    carType: CarType.VISIT,
     state: ParkingState.IN,
     history: [
       // {
@@ -206,7 +208,7 @@ export const detailCarData: CarDetail[] = [
     number: "22다 4567",
     address: "서울시 강남구 테헤란로 3",
     phone: "010-1111-0003",
-    carType: CarType.resident,
+    carType: CarType.RESIDENT,
     state: ParkingState.IN,
     history: [
       {
@@ -223,7 +225,7 @@ export const detailCarData: CarDetail[] = [
     number: "15라 7823",
     address: "",
     phone: "",
-    carType: CarType.outside,
+    carType: CarType.OUTSIDE,
     state: ParkingState.IN,
     history: [
       {
@@ -240,7 +242,7 @@ export const detailCarData: CarDetail[] = [
     number: "88마 1111",
     address: "서울시 강남구 테헤란로 5",
     phone: "010-1111-0005",
-    carType: CarType.resident,
+    carType: CarType.RESIDENT,
     state: ParkingState.IN,
     history: [
       {
@@ -257,7 +259,7 @@ export const detailCarData: CarDetail[] = [
     number: "67바 3456",
     address: "",
     phone: "010-2222-0006",
-    carType: CarType.visit,
+    carType: CarType.VISIT,
     state: ParkingState.IN,
     history: [
       {
@@ -274,7 +276,7 @@ export const detailCarData: CarDetail[] = [
     number: "91사 7777",
     address: "서울시 강남구 테헤란로 7",
     phone: "010-1111-0007",
-    carType: CarType.resident,
+    carType: CarType.RESIDENT,
     state: ParkingState.IN,
     history: [
       {
@@ -291,7 +293,7 @@ export const detailCarData: CarDetail[] = [
     number: "45아 2468",
     address: "",
     phone: "",
-    carType: CarType.outside,
+    carType: CarType.OUTSIDE,
     state: ParkingState.IN,
     history: [
       {
@@ -308,7 +310,7 @@ export const detailCarData: CarDetail[] = [
     number: "33자 9876",
     address: "서울시 강남구 테헤란로 9",
     phone: "010-1111-0009",
-    carType: CarType.resident,
+    carType: CarType.RESIDENT,
     state: ParkingState.IN,
     history: [
       {
@@ -325,7 +327,7 @@ export const detailCarData: CarDetail[] = [
     number: "77차 5432",
     address: "",
     phone: "010-2222-0010",
-    carType: CarType.visit,
+    carType: CarType.VISIT,
     state: ParkingState.IN,
     history: [
       {
@@ -342,7 +344,7 @@ export const detailCarData: CarDetail[] = [
     number: "12카 8888",
     address: "서울시 강남구 테헤란로 11",
     phone: "010-1111-0011",
-    carType: CarType.resident,
+    carType: CarType.RESIDENT,
     state: ParkingState.IN,
     history: [
       {
@@ -359,7 +361,7 @@ export const detailCarData: CarDetail[] = [
     number: "59타 1357",
     address: "",
     phone: "",
-    carType: CarType.outside,
+    carType: CarType.OUTSIDE,
     state: ParkingState.IN,
     history: [
       {
@@ -376,7 +378,7 @@ export const detailCarData: CarDetail[] = [
     number: "83파 2222",
     address: "서울시 강남구 테헤란로 13",
     phone: "010-1111-0013",
-    carType: CarType.resident,
+    carType: CarType.RESIDENT,
     state: ParkingState.IN,
     history: [
       {
@@ -393,7 +395,7 @@ export const detailCarData: CarDetail[] = [
     number: "25하 6543",
     address: "",
     phone: "010-2222-0014",
-    carType: CarType.visit,
+    carType: CarType.VISIT,
     state: ParkingState.IN,
     history: [
       {
@@ -410,7 +412,7 @@ export const detailCarData: CarDetail[] = [
     number: "47거 9999",
     address: "서울시 강남구 테헤란로 15",
     phone: "010-1111-0015",
-    carType: CarType.resident,
+    carType: CarType.RESIDENT,
     state: ParkingState.IN,
     history: [
       {
@@ -427,7 +429,7 @@ export const detailCarData: CarDetail[] = [
     number: "16너 4321",
     address: "",
     phone: "",
-    carType: CarType.outside,
+    carType: CarType.OUTSIDE,
     state: ParkingState.IN,
     history: [
       {
@@ -444,7 +446,7 @@ export const detailCarData: CarDetail[] = [
     number: "92더 6666",
     address: "서울시 강남구 테헤란로 17",
     phone: "010-1111-0017",
-    carType: CarType.resident,
+    carType: CarType.RESIDENT,
     state: ParkingState.IN,
     history: [
       {
@@ -461,7 +463,7 @@ export const detailCarData: CarDetail[] = [
     number: "38러 7890",
     address: "",
     phone: "010-2222-0018",
-    carType: CarType.visit,
+    carType: CarType.VISIT,
     state: ParkingState.IN,
     history: [
       {
@@ -478,7 +480,7 @@ export const detailCarData: CarDetail[] = [
     number: "71머 3333",
     address: "서울시 강남구 테헤란로 19",
     phone: "010-1111-0019",
-    carType: CarType.resident,
+    carType: CarType.RESIDENT,
     state: ParkingState.IN,
     history: [
       {
@@ -495,7 +497,7 @@ export const detailCarData: CarDetail[] = [
     number: "19버 5555",
     address: "",
     phone: "",
-    carType: CarType.outside,
+    carType: CarType.OUTSIDE,
     state: ParkingState.IN,
     history: [
       {

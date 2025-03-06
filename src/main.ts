@@ -1,12 +1,16 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
-import { CarRecord } from './car/entities/car.entity';
+import { CarRecord } from './car/dto/car-record.dto';
+
+
 
 declare const module: any;
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create(AppModule,{
+    bufferLogs:true,
+  });
 
   const options = new DocumentBuilder()
   .setTitle('주차 관리 API')
@@ -23,5 +27,6 @@ async function bootstrap() {
     module.hot.accept();
     module.hot.dispose(()=>app.close());
   }
+  console.log('NODE_ENV =>', process.env.NODE_ENV);
 }
 bootstrap();

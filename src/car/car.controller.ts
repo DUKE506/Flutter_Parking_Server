@@ -1,16 +1,19 @@
-import { Controller, Get, Param } from '@nestjs/common';
+import { Controller, Get, Param, Post } from '@nestjs/common';
 import { ApiOkResponse, ApiOperation, ApiParam, ApiTags } from '@nestjs/swagger';
-import { CarRecord, CarType } from './entities/car.entity';
 import { detailCarData, parkingCarData } from './data';
 import { sleep } from './utils/utils';
 import { CarCount } from './dto/car-count.dto';
 import { ListBase } from 'src/common/entities/list-base.entity';
 import { ApiListOkResponseDecorator } from 'src/common/decorator/api-list-ok-response.decorator';
 import { CarDetail } from './entities/car_detail.entity';
+import { CarRecord } from './dto/car-record.dto';
+import { CarType } from './types/types';
+import { CarService } from './car.service';
 
 @ApiTags('car')
 @Controller('car')
 export class CarController {
+    constructor(private carService:CarService){}
 
 
     @ApiOperation({ summary: '현재 주차차량 카운트' })
@@ -27,7 +30,6 @@ export class CarController {
             carType : type,
             value: type == 'all' ? parkingCarData.length : parkingCarData.filter((e) => e.carType == type).length
         }));
-
 
         return data;
     }
@@ -84,5 +86,27 @@ export class CarController {
         const filterData = detailCarData.find( car => car.id == id);
 
         return filterData;
+    }
+
+    @Post('/parking/add/:type')
+    @ApiOperation({ summary: '주차차량 등록' })
+    @ApiParam({
+        name:'type',
+        description : '차량 구분',
+        example : 'resident',
+    })
+    @ApiOkResponse({
+        description : '등록 성공',
+    })
+    async addParkingCar(
+        @Param('type') type:CarType
+    ){
+        console.log(`[Controller][Car] 주차차량 발생(파라미터 : ${type})`);
+        //[입주민차량 주차 시]
+        //DB에 등록되어있는 차량 중 현재 상태가 OUT인 차량을 뽑아와서 등록
+
+        //[외부차량 주차 시]
+        //랜덤 추차 번호 생성하여 기록
+        //Car테이블, parking_car테이블 입력
     }
 }

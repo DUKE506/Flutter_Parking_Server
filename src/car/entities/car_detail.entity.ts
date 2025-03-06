@@ -1,6 +1,6 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { CarType } from "./car.entity";
-import { ParkingHistory, ParkingState } from "./parking_history.entity";
+import { ParkingHistory } from "./parking_history.entity";
+import { CarType, ParkingState } from "../types/types";
 
 
 //차량 상세 모델
