@@ -14,7 +14,7 @@ export class Car extends BaseModel{
         description: '차주명',
         example: '홍길동',
     })
-    @Column('varchar',{length:20})
+    @Column('varchar',{length:20, nullable:true},)
     owner:string;
 
     //차량번호
@@ -32,7 +32,7 @@ export class Car extends BaseModel{
         description:'모델명',
         example:'스포티지',
     })
-    @Column('varchar',{length:20})
+    @Column('varchar',{length:20, nullable:true})
     modelName:string;
 
     //주소
@@ -41,7 +41,7 @@ export class Car extends BaseModel{
         description:'주소',
         example:'햇살아파드 1단지 103동 906호',
     })
-    @Column('varchar',{length:30})
+    @Column('varchar',{length:30, nullable:true})
     address:string;
 
     //전화번호
@@ -50,7 +50,7 @@ export class Car extends BaseModel{
         description:'전화번호',
         example:'01012345678',
     })
-    @Column('varchar',{length:20})
+    @Column('varchar',{length:20, nullable:true})
     phone:string;
 
     //차량구분
@@ -78,10 +78,11 @@ export class Car extends BaseModel{
     state:ParkingState;
 
     //주차 이력
-    @OneToMany(()=>ParkingCars,(cars) => cars.id,{
+    @OneToMany(()=>ParkingCars,(cars) => cars.car,{
         cascade:true,
         //관련 엔티티 즉시 로드
-        eager:true,
+        // eager:true,
+        nullable:true
     })
     @ApiProperty({
             name: 'history',

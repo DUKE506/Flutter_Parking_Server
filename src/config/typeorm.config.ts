@@ -1,6 +1,6 @@
 import { ConfigService } from "@nestjs/config";
 import { TypeOrmModuleOptions } from "@nestjs/typeorm";
-import { join } from 'path';
+
 
 
 
@@ -17,6 +17,9 @@ export const typeOrmConfig = async(
         entities: [__dirname + '/../**/*.entity{.ts,.js}'],
         synchronize: configService.get<boolean>('SYNCHRONIZE'),
         logging: ["query", "error", "schema", "warn", "info", "log"],
-        logger:'advanced-console'
+        logger:'advanced-console',
+        //매 실행마다 스키마 재생성
+        dropSchema:false,
+        autoLoadEntities:true,
     }
 }

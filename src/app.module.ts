@@ -9,7 +9,6 @@ import { CarModule } from './car/car.module';
 import { LoggerModule } from './logger/logger.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import path from 'path';
 import { typeOrmConfig } from './config/typeorm.config';
 
 @Module({
@@ -27,7 +26,7 @@ import { typeOrmConfig } from './config/typeorm.config';
     }),
     UserModule, CarModule, LoggerModule,
   ],
-  controllers: [AppController, UserController, CarController],
-  providers: [AppService, CarService],
+  controllers: [AppController, UserController],
+  providers: [AppService,],
 })
 export class AppModule {}

@@ -20,13 +20,14 @@ export class ParkingCars extends BaseModel{
         description: '출차시간',
         example: '2025-03-06 16:45:12',
     })
-    @Column()
-    exist:Date;
+    @Column({nullable:true})
+    existAt:Date;
 
-    @ManyToOne(()=>Car, (car)=>car.id,{
+    @ManyToOne(()=>Car, (car)=>car.history,{
         onUpdate: 'NO ACTION',
         onDelete: 'NO ACTION',
+        eager:true,
     })
-    @JoinColumn({name:'car_id',referencedColumnName:'id'})
+    @JoinColumn({name:'car',referencedColumnName:'id'})
     car:Car
 }

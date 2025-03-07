@@ -46,23 +46,16 @@ export class CarController {
     @ApiListOkResponseDecorator(CarRecord, {
         description: '주차차량 조회 성공',
     })
-    async getParkingCarByType(
+    async getParkedCarByType(
         @Param('type') carType: CarType
     ): Promise<ListBase<CarRecord>> {
         console.log(`[Controller][Car] 전체 주차차량 조회(파라미터 : ${carType})`);
 
         //딜레이
-        await sleep(300);
-
-        //all인 경우 전체를 반환
-        if (carType == 'all') {
-            return { data: parkingCarData } as ListBase<CarRecord>;
-        }
-
-        //나머지 타입의 경우 해당 데이터만 반환
-        const data = parkingCarData.filter((e) => e.carType == carType);
-
-        return { data } as ListBase<CarRecord>;
+        // await sleep(300);
+        const res = await this.carService.findParkedCarsByType(carType);
+        
+        return res;
     }
 
 
@@ -84,6 +77,8 @@ export class CarController {
         await sleep(300);
 
         const filterData = detailCarData.find( car => car.id == id);
+        const res = await this.carService.findCarDetailById(id);
+        console.log(res);
 
         return filterData;
     }
@@ -101,12 +96,8 @@ export class CarController {
     async addParkingCar(
         @Param('type') type:CarType
     ){
-        console.log(`[Controller][Car] 주차차량 발생(파라미터 : ${type})`);
-        //[입주민차량 주차 시]
-        //DB에 등록되어있는 차량 중 현재 상태가 OUT인 차량을 뽑아와서 등록
+        console.log(`[Controller][Car] 입차 발생(파라미터 : ${type})`);
 
-        //[외부차량 주차 시]
-        //랜덤 추차 번호 생성하여 기록
-        //Car테이블, parking_car테이블 입력
+        return await this.carService.addParkingCar(type);
     }
 }
