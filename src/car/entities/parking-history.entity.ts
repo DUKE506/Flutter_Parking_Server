@@ -4,7 +4,7 @@ import { Column, Entity, JoinColumn, ManyToOne } from "typeorm";
 import { Car } from "./car.entity";
 
 @Entity()
-export class ParkingCars extends BaseModel{
+export class ParkingHistory extends BaseModel {
     //입차시간
     @ApiProperty({
         name: 'entryAt',
@@ -12,7 +12,7 @@ export class ParkingCars extends BaseModel{
         example: '2025-03-06 16:45:12',
     })
     @Column()
-    entryAt:Date;
+    entryAt: Date;
 
     //출차시간
     @ApiProperty({
@@ -20,14 +20,14 @@ export class ParkingCars extends BaseModel{
         description: '출차시간',
         example: '2025-03-06 16:45:12',
     })
-    @Column({nullable:true})
-    existAt:Date;
+    @Column({ nullable: true })
+    existAt: Date;
 
-    @ManyToOne(()=>Car, (car)=>car.history,{
+    @ManyToOne(() => Car, (car) => car.history, {
         onUpdate: 'NO ACTION',
         onDelete: 'NO ACTION',
-        eager:true,
+        eager: true,
     })
-    @JoinColumn({name:'car',referencedColumnName:'id'})
-    car:Car
+    @JoinColumn({ name: 'car', referencedColumnName: 'id' })
+    car: Car
 }

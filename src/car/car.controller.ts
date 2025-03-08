@@ -5,15 +5,16 @@ import { sleep } from './utils/utils';
 import { CarCount } from './dto/car-count.dto';
 import { ListBase } from 'src/common/entities/list-base.entity';
 import { ApiListOkResponseDecorator } from 'src/common/decorator/api-list-ok-response.decorator';
-import { CarDetail } from './entities/car_detail.entity';
+
 import { CarRecord } from './dto/car-record.dto';
 import { CarType } from './types/types';
 import { CarService } from './car.service';
+import { CarDetail } from './dto/car-detail.dto';
 
 @ApiTags('car')
 @Controller('car')
 export class CarController {
-    constructor(private carService:CarService){}
+    constructor(private carService: CarService) { }
 
 
     @ApiOperation({ summary: '현재 주차차량 카운트' })
@@ -27,14 +28,16 @@ export class CarController {
         console.log('[Controller][Car] 주차차량 카운트 조회');
         await sleep(300);
         const data: CarCount[] = Object.values(CarType).map((type) => ({
-            carType : type,
+            carType: type,
             value: type == 'all' ? parkingCarData.length : parkingCarData.filter((e) => e.carType == type).length
         }));
 
-        return data;
+        const res = await this.carService.findParkingCarCount();
+        console.log(res);
+        return res;
     }
 
-    
+
 
     @Get('/:type')
     @ApiParam({
@@ -53,49 +56,45 @@ export class CarController {
 
         //딜레이
         // await sleep(300);
-        const res = await this.carService.findParkedCarsByType(carType);
-        
-        return res;
+
+
+        return await this.carService.findParkedCarsByType(carType);
     }
 
 
     @Get('/detail/:id')
     @ApiParam({
-        name:'id',
-        description : '차량 식별자',
-        example : '1',
+        name: 'id',
+        description: '차량 식별자',
+        example: '1',
     })
-    @ApiOperation({summary:'주차차량 상세 조회'})
+    @ApiOperation({ summary: '주차차량 상세 조회' })
     @ApiOkResponse({
-        description : '조회 성공',
-        type :CarDetail,
+        description: '조회 성공',
+        type: CarDetail,
     })
     async getDetailCarById(
-        @Param('id') id : string,
-    ):Promise<CarDetail | undefined>{
+        @Param('id') id: string,
+    ): Promise<CarDetail | null> {
         console.log(`[Controller][Car] 주차차량 상세조회(파라미터 : ${id})`);
-        await sleep(300);
+        // await sleep(300);
 
-        const filterData = detailCarData.find( car => car.id == id);
-        const res = await this.carService.findCarDetailById(id);
-        console.log(res);
-
-        return filterData;
+        return await this.carService.findCarDetailById(id);
     }
 
     @Post('/parking/add/:type')
     @ApiOperation({ summary: '주차차량 등록' })
     @ApiParam({
-        name:'type',
-        description : '차량 구분',
-        example : 'resident',
+        name: 'type',
+        description: '차량 구분',
+        example: 'resident',
     })
     @ApiOkResponse({
-        description : '등록 성공',
+        description: '등록 성공',
     })
     async addParkingCar(
-        @Param('type') type:CarType
-    ){
+        @Param('type') type: CarType
+    ) {
         console.log(`[Controller][Car] 입차 발생(파라미터 : ${type})`);
 
         return await this.carService.addParkingCar(type);
