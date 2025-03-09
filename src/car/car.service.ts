@@ -169,6 +169,8 @@ export class CarService {
         const modelName = randomCarModel();
         //랜덤 휴대폰 번호
         const phone = randomPhone();
+        //입차 차량
+        let car = new Car();
 
 
         //이전 주차여부
@@ -181,72 +183,41 @@ export class CarService {
 
         //기존 차량 주차(입주, 외부)
         if (hasData) {
-            const updateCar = await this.carRepository.update(hasData.id, {
-                state: ParkingState.IN,
-            })
-            const res = await this.addParkingCars((updateCar).raw);
-            return res;
+            hasData.state = ParkingState.IN;
+            car = await this.dataSource.manager.save(hasData)
         }
 
         //입주차량
         if (carType == CarType.RESIDENT) {
-            const addCar = await this.carRepository.save({
-                owner: name,
-                number: carNumber,
-                modelName: modelName,
-                carType: carType,
-                //임시 - 입주민 차량 등록 구현 후 수정예정
-                address: '서울특별시 성동구 성수동2가 835(성수롯데캐슬아파트)',
-                phone: phone,
-                state: ParkingState.IN
-            })
-            //입차 이력생성
-            const res = await this.addParkingCars(addCar);
-            return res;
+            car.owner = name;
+            car.number = carNumber;
+            car.modelName = modelName;
+            car.carType = carType;
+            car.address = '서울특별시 성동구 성수동2가 835(성수롯데캐슬아파트)';
+            car.phone = phone;
+            car.state = ParkingState.IN;
+            //
+            await this.dataSource.manager.save(car);
         }
-
-
 
         //외부차량
         if (carType == CarType.OUTSIDE) {
-
-            //   기존 Car테이블에 데이터가 존재하는지 조회 후 없으면 등록
-            //   주차차량 Parking Cars 테이블에도 히스토리 생성
-
-
-            //외부차량 등록
-            const car = new Car();
             car.number = carNumber;
             car.carType = carType;
             car.state = ParkingState.IN;
 
             await this.dataSource.manager.save(car);
-
-            //이력 생성
-            const history = new ParkingHistory();
-            history.entryAt = new Date();
-            history.car = car;
-            // car.history = Promise.resolve([history]);
-
-            const res = await this.dataSource.manager.save(history);
-
-
-
-
-            //신규 외부 차량 주차
-            // const addCar = await this.carRepository.save({
-            //     number: carNumber,
-            //     carType: carType,
-            //     state: ParkingState.IN,
-            // });
-            // //입차 이력생성
-            // const res = await this.addParkingCars(addCar);
-
-            return res;
-
-
         }
 
+        //이력 생성
+        const history = new ParkingHistory();
+        history.entryAt = new Date();
+        history.car = car;
+
+        const res = await this.dataSource.manager.save(history);
+
+
+        return res;
 
     }
 }

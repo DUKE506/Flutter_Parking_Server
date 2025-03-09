@@ -1,4 +1,4 @@
-import { Controller, Get, Param, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import { ApiOkResponse, ApiOperation, ApiParam, ApiTags } from '@nestjs/swagger';
 import { detailCarData, parkingCarData } from './data';
 import { sleep } from './utils/utils';
@@ -10,6 +10,7 @@ import { CarRecord } from './dto/car-record.dto';
 import { CarType } from './types/types';
 import { CarService } from './car.service';
 import { CarDetail } from './dto/car-detail.dto';
+import { AddVisit } from './dto/add-visit.dto';
 
 @ApiTags('car')
 @Controller('car')
@@ -32,9 +33,8 @@ export class CarController {
             value: type == 'all' ? parkingCarData.length : parkingCarData.filter((e) => e.carType == type).length
         }));
 
-        const res = await this.carService.findParkingCarCount();
-        console.log(res);
-        return res;
+
+        return await this.carService.findParkingCarCount();
     }
 
 
@@ -99,4 +99,16 @@ export class CarController {
 
         return await this.carService.addParkingCar(type);
     }
+
+    /**
+     * 방문차량 등록
+     */
+    @Post('/add/visit')
+    async addVisitCar(
+        @Body() data: AddVisit
+    ) {
+        console.log(data);
+    }
+
+
 }
