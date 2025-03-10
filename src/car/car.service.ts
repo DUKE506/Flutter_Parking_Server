@@ -9,6 +9,7 @@ import { CarRecord } from './dto/car-record.dto';
 import { ListBase } from 'src/common/entities/list-base.entity';
 import { CarDetail } from './dto/car-detail.dto';
 import { CarCount } from './dto/car-count.dto';
+import { AddVisit } from './dto/add-visit.dto';
 
 
 @Injectable()
@@ -219,5 +220,22 @@ export class CarService {
 
         return res;
 
+    }
+
+    /**
+     * 방문차량 등록(외부 -> 방문)
+     * @param visitCar 
+     */
+    async addVisitCar(
+        visitCar: AddVisit
+    ){
+        const res =  await this.carRepository.update(parseInt(visitCar.id),{
+            owner : visitCar.name,
+            phone : visitCar.phone,
+            carType : CarType.VISIT,
+        });
+
+        console.log(res);
+        
     }
 }

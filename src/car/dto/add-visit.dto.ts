@@ -1,6 +1,8 @@
 
 
 export class AddVisit {
+    //식별자
+    id:string;
     //이름
     name: string;
     //차량번호

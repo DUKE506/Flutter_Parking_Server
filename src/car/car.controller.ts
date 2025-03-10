@@ -107,7 +107,8 @@ export class CarController {
     async addVisitCar(
         @Body() data: AddVisit
     ) {
-        console.log(data);
+        console.log(`[Controller][Car] 방문차량 등록(파라미터 :`,data,')');
+        return await this.carService.addVisitCar(data);
     }
 
 
