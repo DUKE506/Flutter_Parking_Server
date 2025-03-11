@@ -10,7 +10,8 @@ import { CarRecord } from './dto/car-record.dto';
 import { CarType } from './types/types';
 import { CarService } from './car.service';
 import { CarDetail } from './dto/car-detail.dto';
-import { AddVisit } from './dto/add-visit.dto';
+import { AddVisitCar } from './dto/add-visit-car.dto';
+import { AddResidentCar } from './dto/add-resident-car.dto';
 
 @ApiTags('car')
 @Controller('car')
@@ -105,10 +106,17 @@ export class CarController {
      */
     @Post('/add/visit')
     async addVisitCar(
-        @Body() data: AddVisit
+        @Body() data: AddVisitCar
     ) {
         console.log(`[Controller][Car] 방문차량 등록(파라미터 :`,data,')');
         return await this.carService.addVisitCar(data);
+    }
+
+    @Post('/add/resident')
+    async addResidentCar(
+        @Body() data:AddResidentCar
+    ){
+        return await this.carService.addResidentCar(data);
     }
 
 

@@ -9,7 +9,8 @@ import { CarRecord } from './dto/car-record.dto';
 import { ListBase } from 'src/common/entities/list-base.entity';
 import { CarDetail } from './dto/car-detail.dto';
 import { CarCount } from './dto/car-count.dto';
-import { AddVisit } from './dto/add-visit.dto';
+import { AddVisitCar } from './dto/add-visit-car.dto';
+import { AddResidentCar } from './dto/add-resident-car.dto';
 
 
 @Injectable()
@@ -83,6 +84,7 @@ export class CarService {
                 }
             })
         };
+        console.log(datas);
 
         return datas;
     }
@@ -224,18 +226,38 @@ export class CarService {
 
     /**
      * 방문차량 등록(외부 -> 방문)
-     * @param visitCar 
+     * @param visit 
      */
     async addVisitCar(
-        visitCar: AddVisit
+        visit: AddVisitCar
     ){
-        const res =  await this.carRepository.update(parseInt(visitCar.id),{
-            owner : visitCar.name,
-            phone : visitCar.phone,
+        const res =  await this.carRepository.update(parseInt(visit.id),{
+            owner : visit.name,
+            phone : visit.phone,
             carType : CarType.VISIT,
         });
 
         console.log(res);
         
+    }
+
+    /**
+     * 입주차량 등록
+     * @param visitCar 
+     */
+    async addResidentCar(
+        resident: AddResidentCar
+    ){
+        console.log(resident)
+        const res = await this.carRepository.insert({
+            owner : resident.name,
+            number : resident.carNumber,
+            modelName : resident.modelName,
+            phone : resident.phone,
+            address : resident.detailAddress,
+            carType : CarType.RESIDENT,
+            state : ParkingState.IN,
+
+        })
     }
 }

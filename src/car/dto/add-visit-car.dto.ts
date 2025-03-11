@@ -1,6 +1,6 @@
 
 
-export class AddVisit {
+export class AddVisitCar {
     //식별자
     id:string;
     //이름
