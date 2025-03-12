@@ -63,11 +63,11 @@ export class CarController {
     }
 
 
-    @Get('/detail/:id')
+    @Get('/detail/:carNumber')
     @ApiParam({
-        name: 'id',
-        description: '차량 식별자',
-        example: '1',
+        name: 'carNumber',
+        description: '차량번호',
+        example: '08가8445',
     })
     @ApiOperation({ summary: '주차차량 상세 조회' })
     @ApiOkResponse({
@@ -75,12 +75,12 @@ export class CarController {
         type: CarDetail,
     })
     async getDetailCarById(
-        @Param('id') id: string,
+        @Param('carNumber') carNumber: string,
     ): Promise<CarDetail | null> {
-        console.log(`[Controller][Car] 주차차량 상세조회(파라미터 : ${id})`);
+        console.log(`[Controller][Car] 주차차량 상세조회(파라미터 : ${carNumber})`);
         // await sleep(300);
 
-        return await this.carService.findCarDetailById(id);
+        return await this.carService.findCarDetailById(carNumber);
     }
 
     @Post('/parking/add/:type')
