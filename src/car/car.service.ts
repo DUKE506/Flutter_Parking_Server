@@ -28,6 +28,10 @@ export class CarService {
     private readonly car: Car;
     private readonly parkingHistory: ParkingHistory[] = [];
 
+    /**
+     * 대시보드 데이터 조회
+     * @returns 
+     */
     async findParkingCarCount() {
         const res = await this.carRepository.find({
             where: { state: ParkingState.IN }
@@ -84,19 +88,19 @@ export class CarService {
                 }
             })
         };
-        console.log(datas);
+        
 
         return datas;
     }
 
     /**
      * 차량 상세조회
-     * @param id 
+     * @param carNumber 
      * @returns 
      */
-    async findCarDetailById(id: string): Promise<CarDetail | null> {
+    async findCarDetailById(carNumber: string): Promise<CarDetail | null> {
         const res = await this.carRepository.findOne({
-            where: { id: parseInt(id) },
+            where: { number: carNumber },
             relations: {
                 history: true,
             }
@@ -143,6 +147,21 @@ export class CarService {
         })
 
 
+        return res;
+    }
+
+    /**
+     * 주차이력 조회
+     * @param number 
+     * @returns 
+     */
+    async getParkingHistoryByNumber(number:string) {
+        const res = await this.parkingHistoryRepository.findOne({
+            where:{
+                car:{number : number}
+            }
+        })
+        
         return res;
     }
 
@@ -237,7 +256,6 @@ export class CarService {
             carType : CarType.VISIT,
         });
 
-        console.log(res);
         
     }
 
@@ -248,16 +266,33 @@ export class CarService {
     async addResidentCar(
         resident: AddResidentCar
     ){
-        console.log(resident)
-        const res = await this.carRepository.insert({
-            owner : resident.name,
-            number : resident.carNumber,
-            modelName : resident.modelName,
-            phone : resident.phone,
-            address : resident.detailAddress,
-            carType : CarType.RESIDENT,
-            state : ParkingState.IN,
+        const hasHistory = await this.getParkingHistoryByNumber(resident.carNumber);
 
-        })
+        //주차장에 있지않은 경우
+        if(hasHistory == null){
+            await this.carRepository.insert({
+                owner : resident.name,
+                number : resident.carNumber,
+                modelName : resident.modelName,
+                phone : resident.phone,
+                address : resident.detailAddress,
+                carType : CarType.RESIDENT,
+                state : ParkingState.OUT,
+    
+            })
+            return true
+        }
+
+        await this.carRepository.update(hasHistory.car.id,{
+            owner : resident.name,
+            modelName : resident.modelName,
+            address : resident.detailAddress,
+            carType : CarType.RESIDENT
+        });
+
+
+
+
+        
     }
 }
